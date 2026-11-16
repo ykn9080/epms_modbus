@@ -1,0 +1,36 @@
+site_id: SMART_BLDG
+points:
+  # 수전반 (Unit 1)
+  PT_B01_HV_KW:       {asset: B01_HV,   unit_id: 1, key: p_total,    scale: 0.001, label: kW}
+  PT_B01_HV_PF:       {asset: B01_HV,   unit_id: 1, key: pf_l1,      scale: 100,   label: percent}
+  PT_B01_HV_KWH:      {asset: B01_HV,   unit_id: 1, key: kwh_import, scale: 1,     label: kWh}
+  PT_B01_HV_VCB_ST:   {asset: B01_HV,   unit_id: 1, type: di, address: 0, label: status}
+
+  # 변압기 1호 (Unit 2), 정격 500kW 기준: 부하율% = W × 0.001 ÷ 500 × 100 = W × 0.0002
+  PT_B01_TR01_KW:     {asset: B01_TR01, unit_id: 2, key: p_total, scale: 0.001,  label: kW}
+  PT_B01_TR01_LOAD:   {asset: B01_TR01, unit_id: 2, key: p_total, scale: 0.0002, label: percent}
+  PT_B01_TR01_ALM:    {asset: B01_TR01, unit_id: 2, type: di, address: 0, label: alarm}
+
+  # 저압 주배전반 (Unit 3)
+  PT_B01_LV_KW:       {asset: B01_LV,   unit_id: 3, key: p_total, scale: 0.001, label: kW}
+  PT_B01_LV_A:        {asset: B01_LV,   unit_id: 3, key: i_l1,    scale: 1,     label: A}
+  PT_B01_LV_V:        {asset: B01_LV,   unit_id: 3, key: v_l1,    scale: 1,     label: V}
+  PT_B01_LV_ACB_ST:   {asset: B01_LV,   unit_id: 3, type: di, address: 0, label: status}
+  PT_B01_LV_ACB_TRIP: {asset: B01_LV,   unit_id: 3, type: di, address: 1, label: trip}
+
+  # 역률보상반 (Unit 4)
+  PT_B01_APFC_ALM:    {asset: B01_APFC, unit_id: 4, type: di, address: 0, label: alarm}
+
+  # 분전반 (Unit 5~15)
+  PT_B01_DB_KW:       {asset: B01_DB,   unit_id: 5,  key: p_total, scale: 0.001, label: kW}
+  PT_FL01_DB_KW:      {asset: FL01_DB,  unit_id: 6,  key: p_total, scale: 0.001, label: kW}
+  PT_FL19_DB_KW:      {asset: FL19_DB,  unit_id: 7,  key: p_total, scale: 0.001, label: kW}
+  PT_FL19_DB_BRK_ST:  {asset: FL19_DB,  unit_id: 7,  type: di, address: 0, label: status}
+  PT_FL20_DB_KW:      {asset: FL20_DB,  unit_id: 8,  key: p_total, scale: 0.001, label: kW}
+  PT_FL21_DB_KW:      {asset: FL21_DB,  unit_id: 9,  key: p_total, scale: 0.001, label: kW}
+  PT_FL22_DB_KW:      {asset: FL22_DB,  unit_id: 10, key: p_total, scale: 0.001, label: kW}
+  PT_FL23_DB_KW:      {asset: FL23_DB,  unit_id: 11, key: p_total, scale: 0.001, label: kW}
+  PT_FL24_DB_KW:      {asset: FL24_DB,  unit_id: 12, key: p_total, scale: 0.001, label: kW}
+  PT_FL25_DB_KW:      {asset: FL25_DB,  unit_id: 13, key: p_total, scale: 0.001, label: kW}
+  PT_B02_DB_KW:       {asset: B02_DB,   unit_id: 14, key: p_total, scale: 0.001, label: kW}
+  PT_B03_DB_KW:       {asset: B03_DB,   unit_id: 15, key: p_total, scale: 0.001, label: kW}
