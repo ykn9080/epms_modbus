@@ -1,0 +1,1797 @@
+[
+    {
+        "id": "f08fa4dd96ae2cb6",
+        "type": "tab",
+        "label": "스마트 빌딩 DDC 데모 (v2)",
+        "disabled": false
+    },
+    {
+        "id": "epms_tab",
+        "type": "tab",
+        "label": "EPMS 제어",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d2_tab",
+        "type": "tab",
+        "label": "EPMS 대시보드2 제어",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "13821ed682a03952",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "influx_In",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb_local:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "4601bad1e9115fec",
+        "type": "tls-config",
+        "name": "AWS_TLS_인증서_최종바인딩",
+        "cert": "",
+        "key": "",
+        "p12": "",
+        "p12name": "",
+        "ca": "",
+        "certname": "04f39d75cf099f5df44499d1df4ec13ea1f5eb6dea98a114b5ac261d29bb7a8c-certificate.pem.crt",
+        "keyname": "04f39d75cf099f5df44499d1df4ec13ea1f5eb6dea98a114b5ac261d29bb7a8c-private.pem.key",
+        "caname": "AmazonRootCA1.pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": "",
+        "certEnv": "",
+        "keyEnv": "",
+        "caEnv": ""
+    },
+    {
+        "id": "835433f9af98ec0e",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "@flowfuse/node-red-dashboard": "1.33.0",
+            "node-red-contrib-influxdb": "0.7.0",
+            "node-red-node-smooth": "0.1.2"
+        }
+    },
+    {
+        "id": "f1ab5f01d0dd5191",
+        "type": "mqtt-broker",
+        "name": "AWS_IoT_Core_Fixed_Broker",
+        "broker": "a1wvphcfzq9xp5-ats.iot.ap-northeast-2.amazonaws.com",
+        "port": "8883",
+        "tls": "4601bad1e9115fec",
+        "clientid": "Building_DDC_Localhost",
+        "autoConnect": true,
+        "usetls": true,
+        "compatmode": false,
+        "protocolVersion": "4",
+        "keepalive": "30",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "8855b363172c21fa",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "postgres-config-fixed",
+        "type": "postgreSQLConfig",
+        "name": "PostgreSQL 로컬",
+        "host": "iot-postgres",
+        "hostFieldType": "str",
+        "port": 5432,
+        "portFieldType": "num",
+        "database": "postgres",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "applicationName": "node-red",
+        "applicationNameType": "str",
+        "max": 10,
+        "maxFieldType": "num",
+        "idle": 1000,
+        "idleFieldType": "num",
+        "connectionTimeout": 10000,
+        "connectionTimeoutFieldType": "num",
+        "userFieldType": "cred",
+        "userEnv": "",
+        "passwordFieldType": "cred",
+        "passwordEnv": ""
+    },
+    {
+        "id": "fc437b5049fb81b2",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "564828bc88edb76c",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#fcfcfd",
+            "primary": "#0d74ce",
+            "bgPage": "#f9f9fb",
+            "groupBg": "#ffffff",
+            "groupOutline": "#d9d9e0"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "77750bee50933780",
+        "type": "ui-page",
+        "name": "Page 1",
+        "ui": "fc437b5049fb81b2",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "564828bc88edb76c",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1280",
+                "cols": "12"
+            }
+        ],
+        "tabs": [],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "0fb86845d3ab4c0b",
+        "type": "ui-group",
+        "name": "Group 1",
+        "page": "77750bee50933780",
+        "width": "12",
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default",
+        "tab": ""
+    },
+    {
+        "id": "d2_page",
+        "type": "ui-page",
+        "name": "EPMS 제어",
+        "ui": "fc437b5049fb81b2",
+        "path": "/epms",
+        "icon": "dashboard",
+        "layout": "grid",
+        "theme": "564828bc88edb76c",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "tabs": [],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "d2_group",
+        "type": "ui-group",
+        "name": "이상 주입",
+        "page": "d2_page",
+        "width": "12",
+        "height": "1",
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default",
+        "tab": ""
+    },
+    {
+        "id": "97425f5b8d8e510e",
+        "type": "ui-switch",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "메인 전등 제어",
+        "label": "Light on/off",
+        "group": "0fb86845d3ab4c0b",
+        "order": 6,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "decouple": false,
+        "topic": "building/BUILDING_01/light_cmd",
+        "topicType": "str",
+        "className": "",
+        "layout": "row-spread",
+        "clickableArea": "label",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "x": 80,
+        "y": 800,
+        "wires": [
+            [
+                "92e94a3bb7a84e0e",
+                "708bac74b49de269"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "92e94a3bb7a84e0e",
+        "type": "ui-text",
+        "z": "f08fa4dd96ae2cb6",
+        "group": "0fb86845d3ab4c0b",
+        "order": 7,
+        "width": "1",
+        "height": "1",
+        "name": "전등 상태 표시",
+        "label": "현재 전등 상태: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "wrapText": true,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 240,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "e0e23fbeaecd53f4",
+        "type": "ui-chart",
+        "z": "f08fa4dd96ae2cb6",
+        "group": "0fb86845d3ab4c0b",
+        "name": "전력량",
+        "label": "Power Consumption",
+        "order": 5,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "시간",
+        "xAxisProperty": "x",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "y",
+        "yAxisPropertyType": "property",
+        "ymin": "400",
+        "ymax": "800",
+        "bins": "",
+        "action": "replace",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": "1",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": "8",
+        "height": "4",
+        "className": "",
+        "interpolation": "linear",
+        "x": 930,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "498d8b0f85a6fa8d",
+        "type": "mqtt out",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "AWS_iot_Publish",
+        "topic": "test",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f1ab5f01d0dd5191",
+        "x": 990,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "9dbaab09cd8f2be5",
+        "type": "mqtt in",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "AWS_iot_Subscribe",
+        "topic": "test",
+        "qos": "1",
+        "datatype": "json",
+        "broker": "f1ab5f01d0dd5191",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 440,
+        "wires": [
+            [
+                "bcbe3a2ee81db21c",
+                "14ef87559cd519ee"
+            ]
+        ]
+    },
+    {
+        "id": "708bac74b49de269",
+        "type": "mqtt out",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "AWS_Publish_Light",
+        "topic": "building/BUILDING_01/light_cmd",
+        "qos": "1",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f1ab5f01d0dd5191",
+        "x": 250,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "bcbe3a2ee81db21c",
+        "type": "influxdb in",
+        "z": "f08fa4dd96ae2cb6",
+        "influxdb": "13821ed682a03952",
+        "name": "influxdb_read",
+        "query": "from(bucket: \"node_red_bucket\")\n  |> range(start: -1h)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sensor_data\")\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature\" or \n                       r[\"_field\"] == \"humidity\" or \n                       r[\"_field\"] == \"power_consumption\" or \n                       r[\"_field\"] == \"co2\" or \n                       r[\"_field\"] == \"lux\" )\n  |> aggregateWindow(every: 5s, fn: mean, createEmpty: false)\n  |> sort(columns: [\"_time\"], desc: false) \n  // [보완] 시간 오름차순 정렬을 확정하여 루프 끝에 '최신값'이 오도록 보장",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "yknam",
+        "x": 380,
+        "y": 660,
+        "wires": [
+            [
+                "8b1d645d46cdca0b"
+            ]
+        ]
+    },
+    {
+        "id": "8b1d645d46cdca0b",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "dashboard용 data",
+        "func": "const chartPoints = [];\nconst latestGaugeData = {};\n\n// 1. InfluxDB 데이터 안전 검증 및 루프 순회\nif (Array.isArray(msg.payload)) {\n    msg.payload.forEach(item => {\n        const fieldName = item._field;\n        let value = item._value;\n        if (value === null || value === undefined) return;\n\n        // 타임스탬프 밀리초 파싱 보장\n        let timeMillis = 0;\n        if (typeof item._time === 'number') {\n            timeMillis = item._time;\n        } else if (typeof item._time === 'string') {\n            timeMillis = new Date(item._time).getTime();\n        } else if (item._time instanceof Date) {\n            timeMillis = item._time.getTime();\n        }\n\n        if (!timeMillis || isNaN(timeMillis)) {\n            timeMillis = Date.now();\n        }\n\n        // 2. 전력 소비량 차트 데이터 적재 (차트 노드 설정인 category: topic에 대응)\n        if (fieldName === \"power_consumption\") {\n            chartPoints.push({\n                x: timeMillis,             // xAxisProperty: \"x\"와 매칭\n                y: Number(value.toFixed(1)) // yAxisProperty: \"y\"와 매칭\n            });\n        } else {\n            // 3. 환경 센서 게이지 데이터 적재\n            let roundedValue;\n            if (fieldName === \"temperature\") {\n                roundedValue = Number(value.toFixed(1)); \n            } else if (fieldName === \"humidity\" || fieldName === \"co2\" || fieldName === \"lux\") {\n                roundedValue = Math.round(value); \n            } else {\n                roundedValue = value;\n            }\n\n            latestGaugeData[fieldName] = roundedValue;\n        }\n    });\n}\n\n// --- 1번 출력 (위쪽 포트): Dashboard 2.0 ui-chart(category: topic) 전용 포맷 ---\n// 차트 노드 설정이 \"category\": \"topic\" 이므로, msg.topic에 시리즈명을 넣고 payload에 순수 [{x, y}] 배열을 보냅니다.\nconst msgLine = {\n    topic: \"Power Consumption\", // 차트 범례에 표시될 이름\n    action: \"replace\",\n    payload: chartPoints        // 순수 [{x: 타임스탬프, y: 값}] 구조의 플랫 배열\n};\n\n// --- 2번 출력 (아래쪽 포트): 게이지 노드용 스트림 분기 패킷 ---\nconst msgGauges = Object.keys(latestGaugeData).map(key => {\n    return {\n        topic: key,\n        payload: latestGaugeData[key]\n    };\n});\n\nreturn [msgLine, msgGauges];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 660,
+        "wires": [
+            [
+                "cb3886ba48823456"
+            ],
+            [
+                "77e93b016d60328d"
+            ]
+        ]
+    },
+    {
+        "id": "77e93b016d60328d",
+        "type": "switch",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "humidity",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "temperature",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "lux",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "co2",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 770,
+        "y": 660,
+        "wires": [
+            [
+                "ab59bc3166310e3c"
+            ],
+            [
+                "fd0eb5d556fa7278"
+            ],
+            [
+                "135b54be7a2b92b0"
+            ],
+            [
+                "063552c4adde629a"
+            ]
+        ]
+    },
+    {
+        "id": "9b127178e390cb7b",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "Postgres 삽입문",
+        "func": "const p = msg.payload;\n\n// 유효성 검사: 객체가 아니거나 timestamp가 없으면 저장하지 않음\nif (!p || typeof p !== 'object' || !p.timestamp) return null;\n\nmsg.topic = `INSERT INTO sensor_data\n    (timestamp, temperature, humidity, co2, lux, occupied, power_consumption, quality_score)\n    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;\n\nmsg.payload = [\n    new Date(Number(p.timestamp)).toISOString(),\n    p.temperature ?? null,\n    p.humidity ?? null,\n    p.co2 ?? null,\n    p.lux ?? null,\n    p.occupied === true || p.occupied === 'true',\n    p.power_consumption ?? null,\n    p.quality_score ?? null\n];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 120,
+        "wires": [
+            [
+                "9c910a8fe644c786"
+            ]
+        ]
+    },
+    {
+        "id": "9c910a8fe644c786",
+        "type": "postgresql",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "Postgres실행",
+        "query": "",
+        "postgreSQLConfig": "postgres-config-fixed",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 1170,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dc49e0f535d2853b",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "이상 데이터 판별",
+        "func": "// ===== 기준값 (생성기와 동일하게 유지) =====\nconst LIMIT = {\n    TEMP_LOW: 18,         // 이하 → 비정상 (HEAT_ON 대상)\n    TEMP_HIGH: 27,        // 이상 → 비정상 (COOL_ON 대상)\n    HUMI_LOW: 40,         // 미만 → 비정상\n    HUMI_HIGH: 60,        // 초과 → 비정상\n    CO2_WARN: 800,        // 초과 → 주의\n    CO2_ABNORMAL: 1000    // 초과 → 비정상\n};\nconst RATE_LIMIT = 4.5;   // 온도 변화율 허용치 (5초 기준)\n\n// ===== 1건 평가 =====\nfunction evaluate(p) {\n    const issues = [];\n    const skipRate = p.disable_rate_check ?? false;\n\n    // 온도\n    const lastTemp = context.get('lastTemp') ?? p.temperature;\n    context.set('lastTemp', p.temperature);\n\n    if (p.temperature <= LIMIT.TEMP_LOW) {\n        issues.push({ label: 'Temperature low (HEAT_ON)', penalty: 35 });\n    } else if (p.temperature >= LIMIT.TEMP_HIGH) {\n        issues.push({ label: 'Temperature high (COOL_ON)', penalty: 35 });\n    } else if (!skipRate && Math.abs(p.temperature - lastTemp) > RATE_LIMIT) {\n        issues.push({ label: 'Abnormal temp change', penalty: 35 });\n    }\n\n    // 습도\n    if (p.humidity < LIMIT.HUMI_LOW || p.humidity > LIMIT.HUMI_HIGH) {\n        issues.push({ label: 'Humidity out of range (40~60)', penalty: 35 });\n    }\n\n    // CO2 (800 초과 주의, 1000 초과 비정상)\n    if (p.co2 > LIMIT.CO2_ABNORMAL) {\n        issues.push({ label: 'CO2 abnormal (>1000)', penalty: 35 });\n    } else if (p.co2 > LIMIT.CO2_WARN) {\n        issues.push({ label: 'CO2 warning (>800)', penalty: 15 });\n    }\n\n    const totalPenalty = issues.reduce((sum, i) => sum + i.penalty, 0);\n    return {\n        score: Math.max(0, 100 - totalPenalty),\n        issues: issues.map(i => i.label)\n    };\n}\n\n// ===== 평가 후 비정상만 insert 메시지로 변환 =====\nconst records = Array.isArray(msg.payload) ? msg.payload : [msg.payload];\nconst insertMsgs = [];\n\nrecords.forEach(p => {\n    if (!p || typeof p !== 'object') return;\n\n    const r = evaluate(p);\n    if (r.score >= 100) return;   // 정상 → 제외\n\n    insertMsgs.push({\n        topic: `INSERT INTO abnormal_data\n                (event_time, temperature, humidity, co2, power_consumption,\n                 quality_score, issues, system_state, anomaly_type)\n                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,\n        payload: [\n            new Date(p.timestamp).toISOString(),\n            p.temperature,\n            p.humidity,\n            p.co2,\n            p.power_consumption,\n            r.score,\n            r.issues.join(', '),\n            p.system_state ?? null,\n            p.anomaly_type ?? null\n        ]\n    });\n});\n\n// 비정상이 없으면 아무것도 보내지 않음\nif (insertMsgs.length === 0) return null;\nreturn insertMsgs;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 180,
+        "wires": [
+            [
+                "9b127178e390cb7b"
+            ]
+        ]
+    },
+    {
+        "id": "cb3886ba48823456",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "차트UI",
+        "func": "// 기존 데이터(msg.payload)는 온전히 유지하면서 eCharts 축 제어 옵션을 주입합니다.\nmsg.ui_update = {\n    chartOptions: {\n        xAxis: [\n            {\n                axisLabel: {\n                    interval: 0,        // 0으로 지정하면 차트가 임의로 라벨을 생략하지 않고 모두 노출합니다.\n                    hideOverlap: false  // 좁은 공간에서 글자가 약간 겹치더라도 숨기지 않고 강제 표시합니다.\n                }\n            }\n        ]\n    }\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 600,
+        "wires": [
+            [
+                "e0e23fbeaecd53f4"
+            ]
+        ]
+    },
+    {
+        "id": "ab59bc3166310e3c",
+        "type": "ui-gauge",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "humidity",
+        "group": "0fb86845d3ab4c0b",
+        "order": 2,
+        "value": "payload",
+        "valueType": "msg",
+        "width": "3",
+        "height": "3",
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Humidity",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "%",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#ffc800",
+                "text": "건조",
+                "textType": "label"
+            },
+            {
+                "from": "20",
+                "color": "#5cd65c",
+                "text": "정상",
+                "textType": "label"
+            },
+            {
+                "from": "60",
+                "color": "#ffc800",
+                "text": "주의",
+                "textType": "label"
+            },
+            {
+                "from": "90",
+                "color": "#ea5353",
+                "text": "위험",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": 100,
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 940,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fd0eb5d556fa7278",
+        "type": "ui-gauge",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "Temperature",
+        "group": "0fb86845d3ab4c0b",
+        "order": 1,
+        "value": "payload",
+        "valueType": "msg",
+        "width": "3",
+        "height": "3",
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Temperature",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "°C",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#ffc800",
+                "text": "저온",
+                "textType": "label"
+            },
+            {
+                "from": "15",
+                "color": "#5cd65c",
+                "text": "정상",
+                "textType": "label"
+            },
+            {
+                "from": "30",
+                "color": "#ea5353",
+                "text": "고온",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "50",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 950,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "135b54be7a2b92b0",
+        "type": "ui-gauge",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "lux",
+        "group": "0fb86845d3ab4c0b",
+        "order": 4,
+        "value": "payload",
+        "valueType": "msg",
+        "width": "3",
+        "height": "3",
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Lux",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "lx",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#ffc800",
+                "text": "어두움",
+                "textType": "label"
+            },
+            {
+                "from": "300",
+                "color": "#5cd65c",
+                "text": "적정",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "1000",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 930,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "063552c4adde629a",
+        "type": "ui-gauge",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "co2",
+        "group": "0fb86845d3ab4c0b",
+        "order": 3,
+        "value": "payload",
+        "valueType": "msg",
+        "width": "3",
+        "height": "3",
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "CO2",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "ppm",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#5cd65c",
+                "text": "좋음",
+                "textType": "label"
+            },
+            {
+                "from": "800",
+                "color": "#ffc800",
+                "text": "일반",
+                "textType": "label"
+            },
+            {
+                "from": "1000",
+                "color": "#ea5353",
+                "text": "나쁨",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "3000",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 930,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6af14d3f498432a2",
+        "type": "http in",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "trigger",
+        "url": "/grafana-trigger",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 100,
+        "wires": [
+            [
+                "4f698029bb68e929"
+            ]
+        ]
+    },
+    {
+        "id": "2cf7f12e568bc241",
+        "type": "http response",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "Response",
+        "statusCode": "",
+        "headers": {},
+        "x": 660,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "dbf3a22f97bd79d9",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "OK",
+        "func": "msg.statusCode = 200;\nmsg.headers = {\n    'Access-Control-Allow-Origin': 'http://localhost:3000'\n};\nmsg.payload = 'OK';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 180,
+        "wires": [
+            [
+                "2cf7f12e568bc241",
+                "bfa90ff1aba3eb58"
+            ]
+        ]
+    },
+    {
+        "id": "07a97e380eea3061",
+        "type": "http in",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "status",
+        "url": "/grafana-status",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "a63fe8d7dabbb0ac"
+            ]
+        ]
+    },
+    {
+        "id": "a63fe8d7dabbb0ac",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "status return",
+        "func": "const SECRET = 'demo-token-change-me';\nif (msg.req.query.token !== SECRET) {\n    msg.statusCode = 403;\n    msg.payload = 'Forbidden';\n    return msg;\n}\nmsg.headers = {\n    'Content-Type': 'application/json',\n    'Access-Control-Allow-Origin': 'http://localhost:3000'\n};\n\nconst sim = flow.get('simDay');\nconst view = flow.get('simView');\nif (sim && sim.active && view) {\n    msg.payload = view;\n} else {\n    msg.payload = flow.get('simStatus') || { stage: 'NORMAL', equipment: {} };\n}\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 60,
+        "wires": [
+            [
+                "2cf7f12e568bc241"
+            ]
+        ]
+    },
+    {
+        "id": "4f698029bb68e929",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "Token_Chk",
+        "func": "const SECRET = 'demo-token-change-me';\n\nif (msg.req.query.token !== SECRET) {\n    return [msg, null];   // 출력1: 실패\n}\nreturn [null, msg];       // 출력2: 통과",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 100,
+        "wires": [
+            [
+                "df610dfb1f30d734"
+            ],
+            [
+                "dbf3a22f97bd79d9"
+            ]
+        ]
+    },
+    {
+        "id": "df610dfb1f30d734",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "403",
+        "func": "msg.statusCode = 403;\nmsg.headers = { 'Access-Control-Allow-Origin': 'http://localhost:3000' };\nmsg.payload = 'Forbidden';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [
+                "2cf7f12e568bc241"
+            ]
+        ]
+    },
+    {
+        "id": "731e6cd64915ec88",
+        "type": "inject",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "5초틱",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 260,
+        "wires": [
+            [
+                "bfa90ff1aba3eb58"
+            ]
+        ]
+    },
+    {
+        "id": "795bc7f9003e3407",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "재실인원생성",
+        "func": "// 1. 상태 로드 (40실, 0명 초기화)\nconst sim = flow.get('simDay');\nconst KEY = (sim && sim.active) ? 'roomsDemo' : 'rooms';\nlet rooms = flow.get(KEY);\nif (!rooms) {\n    rooms = {};\n    for (let f = 1; f <= 10; f++) {\n        for (const r of ['A', 'B', 'C', 'D']) {\n            rooms[`${f}F_${r}`] = 0;\n        }\n    }\n}\n\n// 2. 시각 결정: 데모 중이면 가상 시각, 아니면 실제 시각\n\n\nconst demo = !!(sim && sim.active);\nlet minuteOfDay;\nif (demo) {\n    minuteOfDay = sim.simMinute;\n} else {\n    const now = new Date();\n    minuteOfDay = now.getHours() * 60 + now.getMinutes();\n}\n\n// 3. 점유율 앵커 (수용 400명 기준)\nconst CAPACITY = 400;\nconst DEMO_ANCHORS = [\n    { m: 16 * 60, pct: 0.80 },\n    { m: 17 * 60, pct: 0.70 },\n    { m: 18 * 60, pct: 0.30 },\n    { m: 19 * 60, pct: 0.10 },\n    { m: 20 * 60, pct: 0.05 },\n    { m: 21 * 60, pct: 0.03 },\n    { m: 22 * 60, pct: 0.01 }\n];\nconst NORMAL_ANCHORS = [\n    { m: 0,       pct: 0.05 },\n    { m: 7 * 60,  pct: 0.05 },\n    { m: 9 * 60,  pct: 0.90 },\n    { m: 13 * 60, pct: 0.70 },\n    { m: 17 * 60, pct: 0.70 },\n    { m: 19 * 60, pct: 0.05 },\n    { m: 24 * 60, pct: 0.05 }\n];\nconst A = demo ? DEMO_ANCHORS : NORMAL_ANCHORS;\n\nfunction pctAt(m) {\n    if (m <= A[0].m) return A[0].pct;\n    for (let i = 0; i < A.length - 1; i++) {\n        const a = A[i], b = A[i + 1];\n        if (m >= a.m && m <= b.m) {\n            return a.pct + (b.pct - a.pct) * (m - a.m) / (b.m - a.m);\n        }\n    }\n    return A[A.length - 1].pct;\n}\n\nconst targetTotal = Math.round(pctAt(minuteOfDay) * CAPACITY);\n\n// 4. 목표 인원에 맞춰 실별 무작위 증감 (실당 0~10명)\nlet currentTotal = Object.values(rooms).reduce((a, b) => a + b, 0);\nconst gap = targetTotal - currentTotal;\nconst moves = Math.min(Math.abs(gap), 400);   // 틱당 최대 400명 이동\nconst dir = gap > 0 ? 1 : -1;\n\nconst keys = Object.keys(rooms);\nfor (let i = 0; i < moves; i++) {\n    const candidates = keys.filter(k => dir > 0 ? rooms[k] < 10 : rooms[k] > 0);\n    if (candidates.length === 0) break;\n    const key = candidates[Math.floor(Math.random() * candidates.length)];\n    rooms[key] += dir;\n    currentTotal += dir;\n}\n\n// 5. 상태 저장\nflow.set(KEY, rooms);\n// 6. 다음 노드로 전달\nmsg.rooms = rooms;\nmsg.totalPeople = currentTotal;\nmsg.targetPct = Math.round(pctAt(minuteOfDay) * 1000) / 10;\nmsg.minuteOfDay = minuteOfDay;\nmsg.demo = demo;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 260,
+        "wires": [
+            [
+                "eef0ad4ad26739df"
+            ]
+        ]
+    },
+    {
+        "id": "bfa90ff1aba3eb58",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "명령입력",
+        "func": "// 버튼/HTTP 명령을 읽어 상태 명령으로 정리\nconst CMD_MAP = {\n    ANOMALY_TEMP: 'temp',\n    ANOMALY_TEMP_LOW: 'tempLow',\n    ANOMALY_HUMI: 'humi',\n    ANOMALY_CO2: 'co2'\n};\n\n\nlet raw;\nif (msg.req && msg.req.query && msg.req.query.action !== undefined) {\n    raw = msg.req.query.action;\n} else if (typeof msg.payload === 'string') {\n    raw = msg.payload;\n}\nconst cmd = (raw === undefined) ? 'TICK' : String(raw).trim().toUpperCase();\n\nlet s = flow.get('state') || {\n    anomaly: null, equipOn: false, detectTicks: 0, recovered: false,\n    temp: 22.0, humi: 45.0, co2: 550, lux: 350, occupied: false,\n    view: null\n};\n\nif (CMD_MAP[cmd] !== undefined) {\n    if (s.anomaly !== CMD_MAP[cmd]) {\n        s.anomaly = CMD_MAP[cmd];\n        s.equipOn = false;\n        s.detectTicks = 0;\n        s.recovered = false;\n    }\n} else if (cmd === 'RESET') {\n    s.anomaly = null;\n    s.equipOn = false;\n    s.detectTicks = 0;\n    s.recovered = false;\n} else if (cmd === 'OCCUPY_ON') {\n    s.occupied = true;\n} else if (cmd === 'OCCUPY_OFF') {\n    flow.set('simDay', {\n        active: true,\n        startMinute: 16 * 60,   // 16:00\n        endMinute: 22 * 60,     // 22:00\n        simMinute: 16 * 60,\n        stepMinute: 60,         // 틱당 15분 (5초 틱 기준 약 2분에 완료)\n        ticks: 0\n    });\n}else if (cmd !== 'TICK') {\n    node.warn(`알 수 없는 명령: [${cmd}]`);\n}\n\n\nflow.set('state', s);\nmsg.state = s;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 260,
+        "wires": [
+            [
+                "9b8ab7d8f3a6a281"
+            ]
+        ]
+    },
+    {
+        "id": "9b8ab7d8f3a6a281",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "시나리오엔진",
+        "func": "\n\n// ---------- 설정 ----------\nconst SC = {\n    temp:    { sensor: 'temp', dir: 'high', detect: 28,   severe: 30,   ok: 24,  rise: 3.0,  fall: 3.0,  noise: 0.4, cap: 45.0 },\n    tempLow: { sensor: 'temp', dir: 'low',  detect: 18,   severe: 15,   ok: 20,  rise: 3.0,  fall: 3.0,  noise: 0.4, cap: 5.0  },\n    humi:    { sensor: 'humi', dir: 'high', detect: 60,   severe: 75,   ok: 55,  rise: 8.0,  fall: 11.5, noise: 0.8, cap: 100.0 },\n    co2:     { sensor: 'co2',  dir: 'high', detect: 1000, severe: 1300, ok: 900, rise: 250,  fall: 220,  noise: 20,  cap: 3000 }\n};\nconst AUTO_START_TICKS = 4;\nconst NORMAL_TARGET = { temp: 22.0, humi: 45.0, co2: 500, co2Occupied: 650 };\n\nconst noise = (amp) => (Math.random() - 0.5) * amp;\nconst isBeyond = (L, x, lim) => (L.dir === 'high' ? x >= lim : x <= lim);\nconst isRecovered = (L, x) => (L.dir === 'high' ? x <= L.ok : x >= L.ok);\n\n// ---------- 상태 ----------\nconst s = flow.get('state') || msg.state;\n// 이상 센서: 이상 방향 변화 / 장비 가동 중에는 정상 방향 변화\nfunction stepAnomaly(st) {\n    if (!st.anomaly) return;\n    const L = SC[st.anomaly];\n    const k = (L.dir === 'high') ? 1 : -1;\n    if (st.equipOn) st[L.sensor] -= k * L.fall + noise(L.noise);\n    else            st[L.sensor] += k * L.rise + noise(L.noise);\n    st[L.sensor] = (L.dir === 'high')\n        ? Math.min(st[L.sensor], L.cap)\n        : Math.max(st[L.sensor], L.cap);\n\n}\n\n// 정상 센서: 목표값 주변 변동 (이상 센서 제외)\nfunction stepNormal(st) {\n    const anomSensor = st.anomaly ? SC[st.anomaly].sensor : null;\n    if (anomSensor !== 'temp') st.temp += (NORMAL_TARGET.temp - st.temp) * 0.1 + noise(0.3);\n    if (anomSensor !== 'humi') st.humi += (NORMAL_TARGET.humi - st.humi) * 0.1 + noise(1.0);\n    if (anomSensor !== 'co2') {\n        const target = st.occupied ? NORMAL_TARGET.co2Occupied : NORMAL_TARGET.co2;\n        st.co2 += (target - st.co2) * 0.1 + noise(20);\n    }\n}\n\n// 장비 가동 / 정상 복귀 판정\nfunction judgeScenario(st) {\n    if (!st.anomaly) return;\n    const L = SC[st.anomaly];\n    const v = st[L.sensor];\n    if (!st.equipOn) {\n        st.detectTicks = isBeyond(L, v, L.detect) ? st.detectTicks + 1 : 0;\n        if (isBeyond(L, v, L.severe) || st.detectTicks >= AUTO_START_TICKS) {\n            st.equipOn = true;\n        }\n    } else if (isRecovered(L, v)) {\n        st.anomaly = null;\n        st.equipOn = false;\n        st.detectTicks = 0;\n        st.recovered = true;\n    }\n}\n\n// 단계(stage) 계산\n\nfunction calcStage(st) {\n    if (!st.anomaly) return st.recovered ? 'RECOVERED' : 'NORMAL';\n    const L = SC[st.anomaly];\n    const v = st[L.sensor];\n    if (st.equipOn) return 'MITIGATING';\n    if (isBeyond(L, v, L.severe)) return 'SEVERE';\n    if (isBeyond(L, v, L.detect)) return 'DETECTED';\n    return 'NORMAL';   // 기준 도달 전에는 정상 표시 (ANOMALY 단계 제거)\n}\n\n// 조도: 외부 일사량 + 실내 조명\nfunction stepLux(st) {\n    const now = new Date();\n    const hour = now.getHours() + now.getMinutes() / 60;\n    let outdoor = 0;\n    if (hour > 6 && hour < 19) outdoor = Math.sin(Math.PI * (hour - 6) / 13) * 1000;\n    outdoor = Math.max(0, outdoor + noise(60));\n    const lightOn = st.occupied && outdoor < 400;\n    const indoorTarget = outdoor * 0.3 + (lightOn ? 350 : 0);\n    st.lux += (indoorTarget - st.lux) * 0.3 + noise(5);\n    st.lux = Math.min(Math.max(st.lux, 0), 1000);\n    return { outdoor, lightOn };\n}\n\nstepAnomaly(s);\nstepNormal(s);\njudgeScenario(s);\nconst stage = calcStage(s);\nconst envInfo = stepLux(s);\n\n\n// 직전 틱 판정을 표시용으로 사용 (수치 변화 이후 점등)\nconst cur = { anomaly: s.anomaly, equipOn: s.equipOn, stage: stage };\nconst shown = s.view || cur;\ns.view = cur;\n\nflow.set('state', s);\n// 다음 노드로 전달\nmsg.state = s;\nmsg.shown = shown;\nmsg.envInfo = envInfo;\n\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 320,
+        "wires": [
+            [
+                "795bc7f9003e3407"
+            ]
+        ]
+    },
+    {
+        "id": "5a6c84951376151d",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "출력생성",
+        "func": "const sim = flow.get('simDay');\nif (sim && sim.active) {\n    // 라이팅 시연 중에는 InfluxDB/AWS 게시 생략 (시연 값은 flow에만)\n    return null;\n}\n\nconst s = msg.state;\nmsg.lux = msg.lux ?? s.lux;\nmsg.outdoor = msg.outdoor ?? 0;\nmsg.litCount = msg.litCount ?? 0;\nmsg.rooms = msg.rooms || {};\nconst shown = msg.shown;\n\n// 1. 장비 가동 상태 (직전 틱 판정 기준)\nconst equip = {\n    chiller: shown.anomaly === 'temp' && shown.equipOn,\n    heater: shown.anomaly === 'tempLow' && shown.equipOn,\n    humidifier: false,\n    dehumidifier: shown.anomaly === 'humi' && shown.equipOn,\n    ahu: shown.anomaly === 'co2' && shown.equipOn\n};\n\n// 2. 장비/환기 상태 문자열\nlet hvac = \"OFF\";\nif (s.temp > 28) hvac = \"COOL_ON\";\nelse if (s.temp < 18) hvac = \"HEAT_ON\";\nif (equip.chiller) hvac = \"COOL_ON\";\nif (equip.heater) hvac = \"HEAT_ON\";\n\nlet humiStatus = \"OFF\";\nif (s.humi < 40) humiStatus = \"HUMIDIFIER_ON\";\nelse if (s.humi > 60) humiStatus = \"DEHUMIDIFIER_ON\";\nif (equip.dehumidifier) humiStatus = \"DEHUMIDIFIER_ON\";\n\nlet vent = \"OFF\";\nif (s.co2 > 1000) vent = \"VENT_HIGH\";\nelse if (s.co2 > 800) vent = \"VENT_LOW\";\nif (equip.ahu) vent = \"AHU_FRESH_AIR\";\n\n\n// 4. 발행 payload 구성 (point 단위)\nconst ASSET = \"AS_FL19_NODERED_SEN_01\";\nconst ts = Date.now();\nconst P = (pid, value, unit, type) => ({ point_id: pid, value, unit, type });\n\nconst points = {\n    temperature: P(\"PT_FL19_NODERED_TEMP\", parseFloat(s.temp.toFixed(1)), \"°C\", \"temperature\"),\n    humidity:    P(\"PT_FL19_NODERED_HUMI\", Math.round(s.humi), \"%\", \"humidity\"),\n    co2:         P(\"PT_FL19_NODERED_CO2\", Math.floor(s.co2), \"ppm\", \"co2\"),\n    lux:         P(\"PT_FL19_NODERED_LUX\", msg.lux, \"lx\", \"lux\"),\n    outdoor_lux: P(\"PT_FL19_NODERED_OUTLUX\", msg.outdoor, \"lx\", \"outdoor_lux\"),\n    lit_rooms:   P(\"PT_FL19_NODERED_LITROOMS\", msg.litCount, \"rooms\", \"lit_rooms\"),\n    occupied:    P(\"PT_FL19_NODERED_OCC\", s.occupied ? 1 : 0, \"bool\", \"occupied\"),\n    \n};\n\n// 방별 재실 인원: 방 하나당 point 하나\nfor (const key of Object.keys(msg.rooms)) {\n    points[`room_${key}`] = P(`PT_FL19_OCC_${key}`, msg.rooms[key], \"person\", \"occupancy\");\n}\n\n// 문자열 상태 point\nconst status_points = {\n    hvac:     { point_id: \"PT_FL19_HVAC_STATUS\", value_str: hvac },\n    vent:     { point_id: \"PT_FL19_VENT_STATUS\", value_str: vent },\n    humidity: { point_id: \"PT_FL19_HUMI_STATUS\", value_str: humiStatus },\n    light:    { point_id: \"PT_FL19_LIGHT_STATUS\", value_str: msg.litCount > 0 ? \"LIGHT_ON\" : \"OFF\" },\n    system:   { point_id: \"PT_FL19_SYS_STATE\", value_str: shown.equipOn ? \"RECOVERING\" : (shown.anomaly ? \"ANOMALY\" : \"NORMAL\") }\n};\n// 출력생성 함수, payload 구성 직전\nflow.set('seq', (flow.get('seq') || 0) + 1);\n\nmsg.payload = {\n    seq: flow.get('seq'),\n    timestamp: ts,\n    asset_id: ASSET,\n    points: points,\n    status_points: status_points\n};\nmsg.topic = \"bms/FL19/\" + ASSET + \"/telemetry\";\nmsg.equip = equip;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 200,
+        "wires": [
+            [
+                "acd1e7db4426a58e",
+                "dc49e0f535d2853b",
+                "498d8b0f85a6fa8d"
+            ]
+        ]
+    },
+    {
+        "id": "acd1e7db4426a58e",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "상태저장",
+        "func": "// 상태저장 노드\nconst p = msg.payload;\n\nflow.set('simStatus', {\n    timestamp: p.timestamp,\n    mode: 'REAL',\n    stage: p.stage,\n    anomaly_type: p.anomaly_type,\n    equipment: msg.equip,\n    temperature: p.temperature,\n    humidity: p.humidity,\n    co2: p.co2,\n    lux: p.lux,\n    lit_rooms: p.lit_rooms,\n    occupied: p.occupied,\n    occupancy: msg.rooms        // 실시간 방별 인원\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eef0ad4ad26739df",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "Lux계산",
+        "func": "// ===== Lux계산: 실별 조도 → 건물 평균 =====\nconst LUX_OCCUPIED = 400;   // 재실 실 조도\nconst LUX_EMPTY = 0;     // 빈 실 조도\n\nconst rooms = msg.rooms;\nconst keys = Object.keys(rooms);\nconst totalRooms = keys.length;   // 40\n\nconst lightState = {};\nlet litCount = 0;\nlet sumLux = 0;\n\nfor (const key of keys) {\n    const occupied = rooms[key] > 0;   // 1명 이상이면 재실\n    lightState[key] = occupied;\n    if (occupied) litCount++;\n    sumLux += occupied ? LUX_OCCUPIED : LUX_EMPTY;\n}\n\n// 건물 평균 조도 = 전체 실 조도 합 ÷ 전체 실 수 (빈 실 0 포함)\nconst avgLux = totalRooms > 0 ? sumLux / totalRooms : 0;\n\nmsg.lightState = lightState;\nmsg.lux = Math.round(avgLux * 10) / 10;   // 소수 첫째 자리\nmsg.litCount = litCount;\nconst hour = new Date().getHours() + new Date().getMinutes() / 60;\nmsg.outdoor = Math.round(hour > 6 && hour < 19 ? Math.sin(Math.PI * (hour - 6) / 13) * 1000 : 0);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 320,
+        "wires": [
+            [
+                "5a6c84951376151d",
+                "4e25c4b6fccf60dc"
+            ]
+        ]
+    },
+    {
+        "id": "4e25c4b6fccf60dc",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "Light Simulate",
+        "func": "const sim = flow.get('simDay');\nif (sim && sim.active) {\n    sim.ticks++;\n    if (sim.simMinute >= sim.endMinute) {\n        sim.active = false;          // 22:00 상태를 한 번 표시한 뒤 종료\n    } else {\n        sim.simMinute += sim.stepMinute;\n    }\n    flow.set('simDay', sim);\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 340,
+        "wires": [
+            [
+                "ab5c1d5afb6b3848"
+            ]
+        ]
+    },
+    {
+        "id": "ab5c1d5afb6b3848",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "Light Summary",
+        "func": "const BASELINE_LUX = 400;\nconst lux = msg.lux ?? 0;\nconst savingsPct = Number(((BASELINE_LUX - lux) / BASELINE_LUX * 100).toFixed(1));\n\nconst sim = flow.get('simDay');\nif (msg.demo && sim) {\n    const m = msg.minuteOfDay;\n    const hh = String(Math.floor(m / 60)).padStart(2, '0');\n    const mm = String(m % 60).padStart(2, '0');\n    const progress = (m - sim.startMinute) / (sim.endMinute - sim.startMinute) * 100;\n\n    flow.set('simView', {\n        mode: 'DEMO',\n        time: `${hh}:${mm}`,\n        people: msg.totalPeople ?? 0,\n        outdoor_lux: msg.outdoor ?? 0,\n        lux: lux,\n        savings_pct: savingsPct,\n        occupancy: msg.rooms,\n        progress_pct: Math.min(100, Math.max(0, Math.round(progress)))\n    });\n} else {\n    // 데모가 끝나면 화면 상태를 일반 모드로 되돌림\n    flow.set('simView', null);\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1180,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "14ef87559cd519ee",
+        "type": "function",
+        "z": "f08fa4dd96ae2cb6",
+        "name": "BMS_Data_Mapping",
+        "func": "if (typeof msg.payload === 'string') msg.payload = JSON.parse(msg.payload);\nif (!msg.payload || typeof msg.payload !== 'object') return null;\n\nconst d = msg.payload;\nconst asset_id = String(d.asset_id || \"UNKNOWN\");\nconst ts = Number(d.timestamp) || Date.now();\n\n// 태그 값 정리: 공백, 쉼표, 등호 제거\nconst clean = (v) => String(v).replace(/[ ,=]/g, \"_\");\n\nconst recs = [];\nconst skipped = [];\n\n// 숫자 point → bms_numeric (value: float)\nfor (const p of Object.values(d.points || {})) {\n    const v = Number(p.value);\n    if (!Number.isFinite(v)) { skipped.push(p.point_id); continue; }\n    recs.push({\n        measurement: \"bms_numeric\",\n        timestamp: ts,\n        tags: {\n            point_id: clean(p.point_id),\n            asset_id: clean(asset_id),\n            sensor_type: clean(p.type)\n        },\n        fields: { value: v }\n    });\n}\n\n// 상태 point → bms_status (value_str: string)\nfor (const p of Object.values(d.status_points || {})) {\n    if (p.value_str === undefined || p.value_str === null) { skipped.push(p.point_id); continue; }\n    recs.push({\n        measurement: \"bms_status\",\n        timestamp: ts,\n        tags: {\n            point_id: clean(p.point_id),\n            asset_id: clean(asset_id),\n            sensor_type: \"status\"\n        },\n        fields: { value_str: String(p.value_str) }\n    });\n}\n\nif (skipped.length) node.warn(\"제외된 point: \" + skipped.join(\", \"));\nif (recs.length === 0) return null;\n\nmsg.payload = recs;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 440,
+        "wires": [
+            [
+                "bms_batch_01"
+            ]
+        ]
+    },
+    {
+        "id": "bms_batch_01",
+        "type": "influxdb batch",
+        "z": "f08fa4dd96ae2cb6",
+        "influxdb": "13821ed682a03952",
+        "precision": "ms",
+        "retentionPolicy": "",
+        "name": "BMS_influx_batch",
+        "database": "",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "yknam",
+        "bucket": "node_red_bucket",
+        "x": 610,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "82645a9ffadf6a2b",
+        "type": "debug",
+        "z": "f08fa4dd96ae2cb6",
+        "d": true,
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "0399da610b577fb5",
+        "type": "BACnet-Read",
+        "z": "f08fa4dd96ae2cb6",
+        "d": true,
+        "name": "",
+        "objectType": "",
+        "instance": "",
+        "propertyId": "",
+        "device": "",
+        "server": "",
+        "multipleRead": false,
+        "x": 220,
+        "y": 360,
+        "wires": [
+            [
+                "82645a9ffadf6a2b"
+            ]
+        ]
+    },
+    {
+        "id": "in_inject",
+        "type": "http in",
+        "z": "epms_tab",
+        "name": "주입 요청",
+        "url": "/epms/inject",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "fn_build"
+            ]
+        ]
+    },
+    {
+        "id": "fn_build",
+        "type": "function",
+        "z": "epms_tab",
+        "name": "입력 검증 + URL 생성",
+        "func": "const allowed = ['OVERCURRENT','VOLTAGE_SAG','LOW_PF','TRIP','ALARM','OPEN','CLEAR'];\nconst scenario = String(msg.req.query.scenario || '').toUpperCase();\nconst unit = String(msg.req.query.unit || '').toLowerCase();\nconst units = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','all'];\nif (!allowed.includes(scenario) || !units.includes(unit)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'invalid scenario or unit', allowed: allowed, units: units };\n    return [null, msg];\n}\nmsg.url = `http://epms-modbus-sim:8080/inject?scenario=${scenario}&unit=${unit}`;\nmsg.method = 'POST';\nreturn [msg, null];\n",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 100,
+        "wires": [
+            [
+                "http_post"
+            ],
+            [
+                "http_resp"
+            ]
+        ]
+    },
+    {
+        "id": "http_post",
+        "type": "http request",
+        "z": "epms_tab",
+        "name": "시뮬레이터 POST",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 590,
+        "y": 60,
+        "wires": [
+            [
+                "fn_reply"
+            ]
+        ]
+    },
+    {
+        "id": "fn_reply",
+        "type": "function",
+        "z": "epms_tab",
+        "name": "응답 정리",
+        "func": "msg.payload = { ok: msg.statusCode === 200, result: msg.payload };\nmsg.headers = { 'Content-Type': 'application/json; charset=utf-8' };\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 100,
+        "wires": [
+            [
+                "http_resp"
+            ]
+        ]
+    },
+    {
+        "id": "in_status",
+        "type": "http in",
+        "z": "epms_tab",
+        "name": "상태 요청",
+        "url": "/epms/status",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 240,
+        "wires": [
+            [
+                "http_status"
+            ]
+        ]
+    },
+    {
+        "id": "http_status",
+        "type": "http request",
+        "z": "epms_tab",
+        "name": "시뮬레이터 GET /status",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://epms-modbus-sim:8080/status",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 580,
+        "y": 240,
+        "wires": [
+            [
+                "http_resp"
+            ]
+        ]
+    },
+    {
+        "id": "http_resp",
+        "type": "http response",
+        "z": "epms_tab",
+        "name": "응답",
+        "statusCode": "",
+        "headers": {},
+        "x": 960,
+        "y": 170,
+        "wires": []
+    },
+    {
+        "id": "d2_btn1",
+        "type": "ui-button",
+        "z": "d2_tab",
+        "group": "d2_group",
+        "name": "",
+        "label": "인입 전압강하",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "emulateClick": false,
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "iconPosition": "left",
+        "payload": "{\"scenario\":\"VOLTAGE_SAG\",\"unit\":\"1\"}",
+        "payloadType": "json",
+        "topic": "",
+        "topicType": "str",
+        "buttonColor": "",
+        "textColor": "",
+        "iconColor": "",
+        "enableClick": true,
+        "enablePointerdown": false,
+        "pointerdownPayload": "",
+        "pointerdownPayloadType": "str",
+        "enablePointerup": false,
+        "pointerupPayload": "",
+        "pointerupPayloadType": "str",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "d2_fn_build"
+            ]
+        ]
+    },
+    {
+        "id": "d2_btn2",
+        "type": "ui-button",
+        "z": "d2_tab",
+        "group": "d2_group",
+        "name": "",
+        "label": "1층 과전류",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "emulateClick": false,
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "iconPosition": "left",
+        "payload": "{\"scenario\":\"OVERCURRENT\",\"unit\":\"6\"}",
+        "payloadType": "json",
+        "topic": "",
+        "topicType": "str",
+        "buttonColor": "",
+        "textColor": "",
+        "iconColor": "",
+        "enableClick": true,
+        "enablePointerdown": false,
+        "pointerdownPayload": "",
+        "pointerdownPayloadType": "str",
+        "enablePointerup": false,
+        "pointerupPayload": "",
+        "pointerupPayloadType": "str",
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "d2_fn_build",
+                "547ecb4749a9d5e7"
+            ]
+        ]
+    },
+    {
+        "id": "d2_btn3",
+        "type": "ui-button",
+        "z": "d2_tab",
+        "group": "d2_group",
+        "name": "",
+        "label": "10층 과전류",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "{\"scenario\":\"OVERCURRENT\",\"unit\":\"3\"}",
+        "payloadType": "json",
+        "topic": "",
+        "topicType": "str",
+        "x": 160,
+        "y": 160,
+        "wires": [
+            [
+                "d2_fn_build"
+            ]
+        ]
+    },
+    {
+        "id": "d2_btn4",
+        "type": "ui-button",
+        "z": "d2_tab",
+        "group": "d2_group",
+        "name": "",
+        "label": "공조 역률저하",
+        "order": 4,
+        "width": "3",
+        "height": "1",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "{\"scenario\":\"LOW_PF\",\"unit\":\"4\"}",
+        "payloadType": "json",
+        "topic": "",
+        "topicType": "str",
+        "x": 160,
+        "y": 200,
+        "wires": [
+            [
+                "d2_fn_build"
+            ]
+        ]
+    },
+    {
+        "id": "d2_btn5",
+        "type": "ui-button",
+        "z": "d2_tab",
+        "group": "d2_group",
+        "name": "",
+        "label": "전체 과전류 (동시)",
+        "order": 5,
+        "width": "3",
+        "height": "1",
+        "color": "#d9534f",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "{\"scenario\":\"OVERCURRENT\",\"unit\":\"all\"}",
+        "payloadType": "json",
+        "topic": "",
+        "topicType": "str",
+        "x": 160,
+        "y": 240,
+        "wires": [
+            [
+                "d2_fn_build"
+            ]
+        ]
+    },
+    {
+        "id": "d2_btn6",
+        "type": "ui-button",
+        "z": "d2_tab",
+        "group": "d2_group",
+        "name": "",
+        "label": "전체 복구",
+        "order": 6,
+        "width": "3",
+        "height": "1",
+        "color": "#5cb85c",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "{\"scenario\":\"CLEAR\",\"unit\":\"all\"}",
+        "payloadType": "json",
+        "topic": "",
+        "topicType": "str",
+        "x": 160,
+        "y": 280,
+        "wires": [
+            [
+                "d2_fn_build"
+            ]
+        ]
+    },
+    {
+        "id": "d2_btn7",
+        "type": "ui-button",
+        "z": "d2_tab",
+        "group": "d2_group",
+        "name": "",
+        "label": "상태 조회",
+        "order": 7,
+        "width": "3",
+        "height": "1",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "{\"op\":\"status\"}",
+        "payloadType": "json",
+        "topic": "",
+        "topicType": "str",
+        "x": 160,
+        "y": 320,
+        "wires": [
+            [
+                "d2_fn_build"
+            ]
+        ]
+    },
+    {
+        "id": "d2_fn_build",
+        "type": "function",
+        "z": "d2_tab",
+        "name": "요청 검증 + URL 생성",
+        "func": "// 입력 소스 판별: 버튼(payload), HTTP GET(req.query)\nlet scenario, unit;\nif (msg.req && msg.req.query) {\n    scenario = String(msg.req.query.scenario || '');\n    unit = String(msg.req.query.unit || '');\n} else {\n    const p = msg.payload || {};\n    if (p.op === 'status') {\n        msg.method = 'GET';\n        msg.url = 'http://epms-modbus-sim:8080/status';\n        msg.payload = '';\n        return [msg, null];\n    }\n    scenario = String(p.scenario || '');\n    unit = String(p.unit || '');\n}\n\nscenario = scenario.toUpperCase();\nunit = unit.toLowerCase();\n\nconst allowed = ['OVERCURRENT','VOLTAGE_SAG','LOW_PF','TRIP','ALARM','OPEN','CLEAR'];\nconst units = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','all'];\n\nif (!allowed.includes(scenario) || !units.includes(unit)) {\n    msg.statusCode = 400;\n    msg.payload = { error: 'invalid scenario or unit', scenario: scenario, unit: unit };\n    return [null, msg];\n}\n\nmsg.method = 'POST';\nmsg.url = 'http://epms-modbus-sim:8080/inject?scenario=' + scenario + '&unit=' + unit;\nmsg.payload = '';\nreturn [msg, null];",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 200,
+        "wires": [
+            [
+                "d2_http",
+                "96a2df0539c5834a"
+            ],
+            [
+                "d2_fmt"
+            ]
+        ]
+    },
+    {
+        "id": "d2_http",
+        "type": "http request",
+        "z": "d2_tab",
+        "name": "시뮬레이터 호출",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 600,
+        "y": 140,
+        "wires": [
+            [
+                "d2_fmt"
+            ]
+        ]
+    },
+    {
+        "id": "d2_fmt",
+        "type": "function",
+        "z": "d2_tab",
+        "name": "결과 포맷",
+        "func": "const body = typeof msg.payload === 'string' ? msg.payload : JSON.stringify(msg.payload);\nmsg.payload = (msg.statusCode ? '[' + msg.statusCode + '] ' : '') + body;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 200,
+        "wires": [
+            [
+                "d2_text",
+                "f00d8cffefc21681"
+            ]
+        ]
+    },
+    {
+        "id": "d2_text",
+        "type": "ui-text",
+        "z": "d2_tab",
+        "group": "d2_group",
+        "order": 8,
+        "width": "12",
+        "height": "2",
+        "name": "",
+        "label": "주입 결과",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "style": false,
+        "font": "",
+        "fontSize": 14,
+        "color": "#000000",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 960,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "547ecb4749a9d5e7",
+        "type": "debug",
+        "z": "d2_tab",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "96a2df0539c5834a",
+        "type": "debug",
+        "z": "d2_tab",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "f00d8cffefc21681",
+        "type": "debug",
+        "z": "d2_tab",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 320,
+        "wires": []
+    }
+]

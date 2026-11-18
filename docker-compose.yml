@@ -12,6 +12,11 @@ services:
       - "127.0.0.1:5432:5432"
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
     networks:
       - iot-network
     deploy:
@@ -151,8 +156,10 @@ services:
       - INFLUX_BUCKET=node_red_bucket
       - PG_DSN=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
     depends_on:
-      - epms-modbus-sim
-      - postgres
+      epms-modbus-sim:
+        condition: service_started
+      postgres:
+        condition: service_healthy
     networks:
       - iot-network
     restart: unless-stopped

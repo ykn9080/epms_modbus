@@ -75,14 +75,14 @@ module.exports = {
     /** To password protect the Node-RED editor and admin API, the following
      * property can be used. See https://nodered.org/docs/security.html for details.
      */
-    //adminAuth: {
-    //    type: "credentials",
-    //    users: [{
-    //        username: "admin",
-    //        password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.",
-    //        permissions: "*"
-    //    }]
-    //},
+    adminAuth: {
+        type: "credentials",
+        users: [{
+            username: "admin",
+            password: "$2a$12$DT2ycbgOuHVP8WfyL4MyjuIy9uJBXXsXYSo..fUusvGPDNc6ghsqW",
+            permissions: "*"
+        }]
+    },
 
     /** The following property can be used to enable HTTPS
      * This property can be either an object, containing both a (private) key
@@ -194,16 +194,16 @@ module.exports = {
      * disabled.
      */
     //httpNodeRoot: '/red-nodes',
-
+      httpNodeRoot: '/',
     /** The following property can be used to configure cross-origin resource sharing
      * in the HTTP nodes.
      * See https://github.com/troygoode/node-cors#configuration-options for
      * details on its contents. The following is a basic permissive set of options:
      */
-    //httpNodeCors: {
-    //    origin: "*",
-    //    methods: "GET,PUT,POST,DELETE"
-    //},
+    httpNodeCors: {
+        origin: "*",
+        methods: "GET,PUT,POST,DELETE"
+    },
 
     /** If you need to set an http proxy please set an environment variable
      * called http_proxy (or HTTP_PROXY) outside of Node-RED in the operating system.
@@ -647,4 +647,8 @@ module.exports = {
     //         "complete": true // set the debug node to show complete msg by default
     //     }
     // }
+
+httpAdminRoot: '/',
+httpNodeRoot: '/',
+trustProxy: true,
 }
