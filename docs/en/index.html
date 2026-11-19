@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPMS Modbus Monitoring System Test Demo</title>
+<style>
+  :root {
+    --navy: #0b1f33;
+    --teal: #0fa3a3;
+    --teal-light: #9ed8d8;
+    --ink: #1b2a3a;
+    --muted: #5b6b7c;
+    --line: #d5dde6;
+    --bg: #f4f7fa;
+    --card: #ffffff;
+    --amber: #e8a33d;
+    --amber-light: #fdf3e1;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.7;
+  }
+  a { color: var(--teal); }
+  header {
+    background: var(--navy);
+    color: #fff;
+    padding: 56px 24px 48px;
+  }
+  header .wrap { max-width: 1040px; margin: 0 auto; }
+  header h1 { margin: 0 0 12px; font-size: 2.2rem; line-height: 1.3; }
+  header p { margin: 0; color: var(--teal-light); font-size: 1.1rem; }
+  header .stack { margin-top: 18px; color: #8fa3b8; font-size: 0.95rem; }
+  header .lang { margin-top: 14px; font-size: 0.95rem; }
+  header .lang a { color: var(--teal-light); }
+  .layout {
+    max-width: 1040px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    padding: 32px 24px 64px;
+  }
+  nav.toc {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    font-size: 0.95rem;
+  }
+  nav.toc h2 { font-size: 0.9rem; color: var(--muted); margin: 0 0 8px; }
+  nav.toc a {
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  nav.toc a:hover { background: #e6f5f5; }
+  main section {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  main h2 { margin: 0 0 16px; font-size: 1.5rem; color: var(--navy); }
+  main h3 { font-size: 1.1rem; margin: 22px 0 8px; color: var(--navy); }
+  p { margin: 0 0 12px; }
+  ul, ol { margin: 0 0 12px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  .callout {
+    background: var(--amber-light);
+    border-left: 4px solid var(--amber);
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin: 16px 0;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .flow .box {
+    flex: 1 1 130px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .flow .box strong { display: block; color: var(--navy); }
+  .flow .box small { color: var(--muted); }
+  .flow .box.hl { background: var(--amber-light); border: 2px solid var(--amber); }
+  .flow .arrow { color: var(--muted); font-size: 1.2rem; }
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .cols .panel {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .cols .panel h3 { margin-top: 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 16px;
+    font-size: 0.95rem;
+  }
+  th, td {
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: var(--navy); color: #fff; font-weight: 600; }
+  tr:nth-child(even) td { background: #f9fbfc; }
+  code, pre {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.9rem;
+  }
+  code {
+    background: #eef3f7;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  pre {
+    background: #0f2236;
+    color: #e6eef5;
+    padding: 14px 16px;
+    border-radius: 10px;
+    overflow-x: auto;
+    line-height: 1.5;
+  }
+  pre code { background: none; padding: 0; color: inherit; }
+  figure { margin: 16px 0; text-align: center; }
+  figure img {
+    max-width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+  }
+  figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 8px; }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 24px;
+  }
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { position: static; }
+    .cols { grid-template-columns: 1fr; }
+    main section { padding: 22px 20px; }
+    header h1 { font-size: 1.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>EPMS Modbus Monitoring System Test Demo</h1>
+    <p>A simulation environment that reproduces and verifies the electrical facility monitoring workflow</p>
+    <div class="stack">Python · Modbus TCP · Docker Compose · PostgreSQL · InfluxDB · Grafana</div>
+    <div class="lang">Language: English · <a href="../">한국어</a></div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <nav class="toc">
+    <h2>Contents</h2>
+    <a href="#purpose">Purpose</a>
+    <a href="#rtu">Practical Use</a>
+    <a href="#arch">Architecture</a>
+    <a href="#hierarchy">Power Hierarchy</a>
+    <a href="#simulator">Simulator</a>
+    <a href="#collector">Collector &amp; Points</a>
+    <a href="#register">Register Map</a>
+    <a href="#operation">Operating Procedure</a>
+    <a href="#inject">Fault Injection</a>
+    <a href="#grafana">Grafana Screen</a>
+    <a href="#limits">Limitations</a>
+    <a href="#trouble">Troubleshooting</a>
+  </nav>
+
+  <main>
+
+    <section id="purpose">
+      <h2>Purpose</h2>
+      <p>This is a simulation environment for testing a Modbus-based electrical facility monitoring system installed in a building. Without any physical equipment, it covers the full flow from <strong>device → collection → storage → anomaly monitoring → visualization</strong>, so the workflow and operating procedures can be verified.</p>
+      <ul>
+        <li>Build and understand the data flow of a monitoring system.</li>
+        <li>Practice how to check and respond when an anomaly occurs.</li>
+        <li>Rehearse operating procedures and fault response without physical equipment.</li>
+      </ul>
+    </section>
+
+    <section id="rtu">
+      <h2>Practical Use: Replace Only the Edge RTU</h2>
+      <div class="callout">Replace the simulator at the edge with a real RTU, and the collector, DB, InfluxDB, and Grafana can be used as-is.</div>
+      <div class="flow">
+        <div class="box hl"><strong>Field RTU</strong><small>real electrical equipment</small></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>Collector</strong><small>unchanged</small></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>InfluxDB</strong><small>unchanged</small></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>Grafana</strong><small>unchanged</small></div>
+      </div>
+      <div class="cols">
+        <div class="panel">
+          <h3>Replace</h3>
+          <ul>
+            <li>Swap the simulator for a real RTU</li>
+            <li>Field unit ID, IP, and port settings</li>
+            <li>Verify the register map against the device manual</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Keep</h3>
+          <ul>
+            <li>Collector polling and fault isolation</li>
+            <li>DB point configuration</li>
+            <li>InfluxDB storage and Grafana dashboards</li>
+          </ul>
+        </div>
+      </div>
+      <p>For sites using RS-485, a Modbus TCP gateway minimizes changes to the collector configuration.</p>
+    </section>
+
+    <section id="arch">
+      <h2>Architecture</h2>
+      <div class="flow">
+        <div class="box"><strong>Simulator</strong><small>Modbus TCP server</small></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>Collector</strong><small>5-second polling</small></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>InfluxDB</strong><small>epms writes</small></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>Grafana</strong><small>monitoring screen</small></div>
+      </div>
+      <ul>
+        <li>The simulator serves values over Modbus TCP on port 502.</li>
+        <li>The collector reads point definitions from PostgreSQL and polls each device.</li>
+        <li>Faults are injected through the HTTP control API on port 8080.</li>
+      </ul>
+    </section>
+
+    <section id="hierarchy">
+      <h2>Power Hierarchy</h2>
+      <table>
+        <thead>
+          <tr><th>Unit</th><th>Device</th><th>Role</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>B01_HV</td><td>Main switchboard (HV)</td><td>Top level, ST status</td></tr>
+          <tr><td>2</td><td>B01_TR01</td><td>Transformer #1</td><td>Alarm</td></tr>
+          <tr><td>3</td><td>B01_LV</td><td>Low-voltage main distribution board</td><td>ST, TRIP</td></tr>
+          <tr><td>4</td><td>B01_APFC</td><td>Power factor correction panel</td><td>No power flow, alarm only</td></tr>
+          <tr><td>5</td><td>B01_DB</td><td>Distribution board</td><td>Weight 0.07</td></tr>
+          <tr><td>6</td><td>FL01_DB</td><td>Distribution board</td><td></td></tr>
+          <tr><td>7</td><td>FL19_DB</td><td>Distribution board</td><td>ST</td></tr>
+          <tr><td>8–13</td><td>FL20–FL25_DB</td><td>Distribution boards</td><td></td></tr>
+          <tr><td>14</td><td>B02_DB</td><td>Distribution board</td><td></td></tr>
+          <tr><td>15</td><td>B03_DB</td><td>Distribution board</td><td></td></tr>
+        </tbody>
+      </table>
+      <ul>
+        <li>Power flows from top to bottom, and each level's total becomes the value of the level above.</li>
+        <li>The 11 distribution boards split the building load by weight (0.06–0.10).</li>
+        <li>The power factor correction panel carries no power and only handles alarms.</li>
+      </ul>
+    </section>
+
+    <section id="simulator">
+      <h2>Simulator Operation</h2>
+      <ol>
+        <li><strong>Time-of-day occupancy:</strong> Interpolates the daily occupancy curve per minute to get building utilization.</li>
+        <li><strong>Building load:</strong> Computes a value between a 30 kW base and a 520 kW peak, with ±2% variation.</li>
+        <li><strong>Hierarchical aggregation:</strong> Builds upper levels in order: distribution board sum → LV board → transformer → main switchboard.</li>
+        <li><strong>Register update:</strong> Writes float32 values as two words (ABCD order) into the SDM630 map every second.</li>
+      </ol>
+      <div class="callout">Upper levels are computed as the sum of lower levels, not as independent random values, so totals always match.</div>
+    </section>
+
+    <section id="collector">
+      <h2>Collector &amp; Point Configuration</h2>
+      <div class="cols">
+        <div class="panel">
+          <h3>PostgreSQL (primary)</h3>
+          <ul>
+            <li>Joins tb_point, tb_asset, tb_space, and tb_site</li>
+            <li>Validates that there is exactly one site</li>
+            <li>Loads only Modbus-mapped points</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>point_map.yaml (fallback)</h3>
+          <ul>
+            <li>Switches automatically when the DB connection fails</li>
+            <li>Same structure in a configuration file</li>
+            <li>Runs locally without a DB</li>
+          </ul>
+        </div>
+      </div>
+      <ul>
+        <li><strong>Type handling:</strong> di reads Discrete Input bits; others read float32 values multiplied by scale.</li>
+        <li><strong>Fault isolation:</strong> If one device read fails, a warning is logged and the collector continues with the next device.</li>
+        <li><strong>Write method:</strong> Writes to InfluxDB in one batch per cycle.</li>
+      </ul>
+    </section>
+
+    <section id="register">
+      <h2>Modbus Register Map (SDM630)</h2>
+      <table>
+        <thead>
+          <tr><th>Key</th><th>Address (0-base)</th><th>Unit</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>v_l1</code>, <code>v_l2</code>, <code>v_l3</code></td><td>0x0000, 0x0002, 0x0004</td><td>V</td><td>Phase voltage</td></tr>
+          <tr><td><code>i_l1</code>, <code>i_l2</code>, <code>i_l3</code></td><td>0x0006, 0x0008, 0x000A</td><td>A</td><td>Current</td></tr>
+          <tr><td><code>p_l1</code>, <code>p_l2</code>, <code>p_l3</code></td><td>0x000C, 0x000E, 0x0010</td><td>W</td><td>Active power per phase</td></tr>
+          <tr><td><code>pf_l1</code></td><td>0x001E</td><td>-</td><td>Power factor</td></tr>
+          <tr><td><code>p_total</code></td><td>0x0034</td><td>W</td><td>Total active power</td></tr>
+          <tr><td><code>s_total</code></td><td>0x0038</td><td>VA</td><td>Total apparent power</td></tr>
+          <tr><td><code>freq</code></td><td>0x0046</td><td>Hz</td><td>Frequency</td></tr>
+          <tr><td><code>kwh_import</code></td><td>0x0156</td><td>kWh</td><td>Total imported energy (verify against manual)</td></tr>
+        </tbody>
+      </table>
+      <p>Float32 values are sent as two 16-bit registers, high word first (ABCD order). When connecting a real device, first confirm that the addresses and data formats in the device manual match this map.</p>
+    </section>
+
+    <section id="operation">
+      <h2>Operating Procedure</h2>
+      <ol>
+        <li><strong>Start:</strong> Bring up the simulator and collector with <code>docker compose up -d</code>.</li>
+        <li><strong>Verify collection:</strong> Check the collector logs for point loading and writes.</li>
+        <li><strong>Inject a fault:</strong> Trigger an event such as overcurrent or trip through the HTTP API.</li>
+        <li><strong>Check the screen:</strong> In Grafana, confirm that the anomaly is detected and the states change.</li>
+      </ol>
+      <h3>Commands</h3>
+<pre><code># Build and start the simulator and collector
+docker compose up -d --build epms-modbus-sim epms-modbus-collector
+
+# Check collector logs (including DB load status)
+docker logs epms-modbus-collector 2>&amp;1 | grep -E "point_map|DB 로드 실패"</code></pre>
+      <p>On success, the logs show <code>point_map: DB에서 25개 포인트 로드</code> and <code>적재 N개 포인트</code>.</p>
+    </section>
+
+    <section id="inject">
+      <h2>Fault Injection</h2>
+<pre><code># Inject overcurrent on unit 7
+curl -X POST "http://localhost:8080/inject?scenario=OVERCURRENT&amp;unit=7"
+
+# Clear faults on all units
+curl -X POST "http://localhost:8080/inject?scenario=CLEAR&amp;unit=all"
+
+# Query current status
+curl "http://localhost:8080/status"</code></pre>
+      <table>
+        <thead>
+          <tr><th>Scenario</th><th>Effect</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>OVERCURRENT</code></td><td>Current +25%</td></tr>
+          <tr><td><code>VOLTAGE_SAG</code></td><td>Voltage −17%</td></tr>
+          <tr><td><code>LOW_PF</code></td><td>Power factor fixed at 0.70</td></tr>
+          <tr><td><code>TRIP</code></td><td>Breaker trip (TRIP=1, ST=0)</td></tr>
+          <tr><td><code>ALARM</code></td><td>Alarm contact ON</td></tr>
+          <tr><td><code>OPEN</code></td><td>Breaker open (ST=0)</td></tr>
+          <tr><td><code>CLEAR</code></td><td>Clear all faults and DI states</td></tr>
+        </tbody>
+      </table>
+      <p>In the simulator console, enter <code>&lt;unit|all&gt; &lt;fault&gt;</code>. Examples: <code>7 overcurrent</code>, <code>all clear</code></p>
+    </section>
+
+    <section id="grafana">
+      <h2>Grafana Monitoring Screen</h2>
+      <figure>
+        <img src="../grafana.png" alt="Grafana monitoring screen">
+        <figcaption>Fault injection buttons, KPIs, single-line diagram, and voltage/current trends on one screen.</figcaption>
+      </figure>
+      <ul>
+        <li><strong>Top:</strong> Fault injection buttons and full reset</li>
+        <li><strong>KPIs:</strong> Total power, power factor, cumulative energy, transformer load ratio</li>
+        <li><strong>Single-line diagram:</strong> Per-floor distribution board power and breaker status</li>
+        <li><strong>Bottom:</strong> Voltage and current trends, load per distribution board</li>
+      </ul>
+      <p>After a fault is injected, the status panels and charts update immediately, and return to normal values after recovery.</p>
+    </section>
+
+    <section id="limits">
+      <h2>Limitations and Next Steps</h2>
+      <ul>
+        <li><strong>Verification:</strong> The <code>kwh_import</code> address (0x0156) needs confirmation against the SDM630 manual.</li>
+        <li><strong>State retention:</strong> Fault states are kept only in memory and reset when the simulator restarts.</li>
+        <li><strong>Communication:</strong> Sites using RS-485 need additional Modbus TCP gateway configuration.</li>
+        <li><strong>Demo screen:</strong> A Grafana Canvas-based Modbus demo screen is planned to be completed.</li>
+      </ul>
+    </section>
+
+    <section id="trouble">
+      <h2>Troubleshooting</h2>
+      <h3>DB load falls back to YAML</h3>
+      <p>If the collector connects before PostgreSQL is ready, it fails with <code>Connection refused</code> and falls back to YAML. Compare the log timestamp with the PostgreSQL startup log to confirm a startup-order issue. To prevent it, add a health check to <code>postgres</code> and set <code>condition: service_healthy</code> in the collector's <code>depends_on</code>.</p>
+      <h3>Network error when using a fixed IP</h3>
+      <p>The error <code>no configured subnet contains IP address</code> occurs when a fixed IP is assigned without defining a subnet on the network. The collector connects by service name (<code>epms-modbus-sim</code>), so removing the fixed IP is recommended.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  EPMS Modbus Monitoring System Test Demo · ykn9080
+</footer>
+
+</body>
+</html>
