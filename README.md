@@ -2,7 +2,7 @@
 
 🌐 **한국어** | [English](README.en.md)
 
-📄 [프로젝트 문서 (한국어)](https://ykn9080.github.io/epms-modbus/) · [Project docs (English)](https://ykn9080.github.io/epms-modbus/en/)
+📄 [프로젝트 문서 (한국어)](https://ykn9080.github.io/epms_modbus/) · [Project docs (English)](https://ykn9080.github.io/epms_modbus/en/)
 
 Modbus 기반으로 설치된 건물의 전기설비 감시 시스템을 테스트하기 위한 시뮬레이션 환경입니다. 실제 설비 없이도 **장비 → 수집 → 저장 → 이상 감시 → 시각화**까지의 흐름과 운영 방법을 검증할 수 있도록 구성했습니다.
 
