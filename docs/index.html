@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPMS Modbus 감시 시스템 테스트 데모</title>
+<style>
+  :root {
+    --navy: #0b1f33;
+    --teal: #0fa3a3;
+    --teal-light: #9ed8d8;
+    --ink: #1b2a3a;
+    --muted: #5b6b7c;
+    --line: #d5dde6;
+    --bg: #f4f7fa;
+    --card: #ffffff;
+    --amber: #e8a33d;
+    --amber-light: #fdf3e1;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.7;
+  }
+  a { color: var(--teal); }
+  header {
+    background: var(--navy);
+    color: #fff;
+    padding: 56px 24px 48px;
+  }
+  header .wrap { max-width: 1040px; margin: 0 auto; }
+  header h1 { margin: 0 0 12px; font-size: 2.2rem; line-height: 1.3; }
+  header p { margin: 0; color: var(--teal-light); font-size: 1.1rem; }
+  header .stack { margin-top: 18px; color: #8fa3b8; font-size: 0.95rem; }
+  .layout {
+    max-width: 1040px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    padding: 32px 24px 64px;
+  }
+  nav.toc {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    font-size: 0.95rem;
+  }
+  nav.toc h2 { font-size: 0.9rem; color: var(--muted); margin: 0 0 8px; }
+  nav.toc a {
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  nav.toc a:hover { background: #e6f5f5; }
+  main section {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  main h2 {
+    margin: 0 0 16px;
+    font-size: 1.5rem;
+    color: var(--navy);
+  }
+  main h3 { font-size: 1.1rem; margin: 22px 0 8px; color: var(--navy); }
+  p { margin: 0 0 12px; }
+  ul, ol { margin: 0 0 12px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  .callout {
+    background: var(--amber-light);
+    border-left: 4px solid var(--amber);
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin: 16px 0;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .flow .box {
+    flex: 1 1 130px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .flow .box strong { display: block; color: var(--navy); }
+  .flow .box small { color: var(--muted); }
+  .flow .box.hl { background: var(--amber-light); border: 2px solid var(--amber); }
+  .flow .arrow { color: var(--muted); font-size: 1.2rem; }
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .cols .panel {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .cols .panel h3 { margin-top: 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 16px;
+    font-size: 0.95rem;
+  }
+  th, td {
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: var(--navy); color: #fff; font-weight: 600; }
+  tr:nth-child(even) td { background: #f9fbfc; }
+  code, pre {
+    font-family: Consolas, "D2Coding", monospace;
+    font-size: 0.9rem;
+  }
+  code {
+    background: #eef3f7;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  pre {
+    background: #0f2236;
+    color: #e6eef5;
+    padding: 14px 16px;
+    border-radius: 10px;
+    overflow-x: auto;
+    line-height: 1.5;
+  }
+  pre code { background: none; padding: 0; color: inherit; }
+  figure { margin: 16px 0; text-align: center; }
+  figure img {
+    max-width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+  }
+  figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 8px; }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 24px;
+  }
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { position: static; }
+    .cols { grid-template-columns: 1fr; }
+    main section { padding: 22px 20px; }
+    header h1 { font-size: 1.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>EPMS Modbus 감시 시스템 테스트 데모</h1>
+    <p>전기설비 감시 흐름을 재현하고 검증한 시뮬레이션 환경</p>
+    <div class="stack">Python · Modbus TCP · Docker Compose · PostgreSQL · InfluxDB · Grafana</div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <nav class="toc">
+    <h2>목차</h2>
+    <a href="#purpose">제작 목적</a>
+    <a href="#rtu">실무 적용</a>
+    <a href="#arch">아키텍처</a>
+    <a href="#hierarchy">전력 계층</a>
+    <a href="#simulator">시뮬레이터 동작</a>
+    <a href="#collector">수집기와 포인트</a>
+    <a href="#register">레지스터 맵</a>
+    <a href="#operation">운영 절차</a>
+    <a href="#inject">이상 주입</a>
+    <a href="#grafana">Grafana 화면</a>
+    <a href="#limits">한계와 개선</a>
+    <a href="#trouble">문제 해결</a>
+  </nav>
+
+  <main>
+
+    <section id="purpose">
+      <h2>제작 목적</h2>
+      <p>Modbus 기반으로 설치된 건물의 전기설비 감시 시스템을 테스트하기 위한 시뮬레이션 환경입니다. 실제 설비 없이도 <strong>장비 → 수집 → 저장 → 이상 감시 → 시각화</strong>까지의 흐름과 운영 방법을 검증할 수 있도록 구성했습니다.</p>
+      <ul>
+        <li>감시 시스템의 데이터 흐름을 직접 구성하고 이해합니다.</li>
+        <li>이상 발생 시 확인과 대응 절차를 실습합니다.</li>
+        <li>현장 장비 없이도 운영 절차와 장애 대응을 미리 연습합니다.</li>
+      </ul>
+    </section>
+
+    <section id="rtu">
+      <h2>실무 적용: 말단 RTU만 교체</h2>
+      <div class="callout">말단의 시뮬레이터를 실제 RTU로 교체하면, 수집기·DB·InfluxDB·Grafana는 그대로 사용할 수 있는 구조입니다.</div>
+      <div class="flow">
+        <div class="box hl"><strong>현장 RTU</strong><small>실제 전기설비</small></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>수집기</strong><small>변경 없음</small></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>InfluxDB</strong><small>변경 없음</small></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>Grafana</strong><small>변경 없음</small></div>
+      </div>
+      <div class="cols">
+        <div class="panel">
+          <h3>교체 범위</h3>
+          <ul>
+            <li>시뮬레이터를 실제 RTU로 교체</li>
+            <li>현장 unit ID, IP, 포트 설정</li>
+            <li>장비 매뉴얼 기준 레지스터 맵 확인</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>유지 범위</h3>
+          <ul>
+            <li>수집기의 폴링과 장애 격리 로직</li>
+            <li>DB 포인트 설정</li>
+            <li>InfluxDB 적재와 Grafana 대시보드</li>
+          </ul>
+        </div>
+      </div>
+      <p>RS-485 구간을 쓰는 현장이라면 Modbus TCP 게이트웨이를 두면 수집기 설정 변경을 최소화할 수 있습니다.</p>
+    </section>
+
+    <section id="arch">
+      <h2>아키텍처</h2>
+      <div class="flow">
+        <div class="box"><strong>시뮬레이터</strong><small>Modbus TCP 서버</small></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>수집기</strong><small>5초 주기 폴링</small></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>InfluxDB</strong><small>epms 적재</small></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>Grafana</strong><small>감시 화면</small></div>
+      </div>
+      <ul>
+        <li>시뮬레이터는 Modbus TCP 502 포트로 값을 제공합니다.</li>
+        <li>수집기는 PostgreSQL에서 포인트 정의를 읽어 장비를 폴링합니다.</li>
+        <li>HTTP 제어 API(8080)로 이상을 주입합니다.</li>
+      </ul>
+    </section>
+
+    <section id="hierarchy">
+      <h2>전력 계층</h2>
+      <table>
+        <thead>
+          <tr><th>Unit</th><th>장비명</th><th>역할</th><th>비고</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>B01_HV</td><td>수전반</td><td>최상위, ST 상태</td></tr>
+          <tr><td>2</td><td>B01_TR01</td><td>변압기 1호</td><td>알람</td></tr>
+          <tr><td>3</td><td>B01_LV</td><td>저압 주배전반</td><td>ST, TRIP</td></tr>
+          <tr><td>4</td><td>B01_APFC</td><td>역률보상반</td><td>전력 없음, 알람 전용</td></tr>
+          <tr><td>5</td><td>B01_DB</td><td>분전반</td><td>가중치 0.07</td></tr>
+          <tr><td>6</td><td>FL01_DB</td><td>분전반</td><td></td></tr>
+          <tr><td>7</td><td>FL19_DB</td><td>분전반</td><td>ST</td></tr>
+          <tr><td>8~13</td><td>FL20~FL25_DB</td><td>분전반</td><td></td></tr>
+          <tr><td>14</td><td>B02_DB</td><td>분전반</td><td></td></tr>
+          <tr><td>15</td><td>B03_DB</td><td>분전반</td><td></td></tr>
+        </tbody>
+      </table>
+      <ul>
+        <li>전력은 위에서 아래로 흐르며, 하위 계층의 합이 상위 계층 값이 됩니다.</li>
+        <li>분전반 11면은 가중치(0.06~0.10)로 건물 부하를 나눠 가집니다.</li>
+        <li>역률보상반은 전력을 흘리지 않고 알람만 담당합니다.</li>
+      </ul>
+    </section>
+
+    <section id="simulator">
+      <h2>시뮬레이터 동작 방식</h2>
+      <ol>
+        <li><strong>시간대별 점유율:</strong> 시간대 곡선을 분 단위로 보간해 건물 사용률을 구합니다.</li>
+        <li><strong>건물 부하 계산:</strong> 기본 30kW와 피크 520kW 사이에서 값을 계산하고 ±2% 변동을 줍니다.</li>
+        <li><strong>계층 합산:</strong> 분전반 합계 → 저압반 → 변압기 → 수전반 순으로 상위 값을 만듭니다.</li>
+        <li><strong>레지스터 기록:</strong> SDM630 맵에 float32 두 워드(ABCD)로 1초마다 갱신합니다.</li>
+      </ol>
+      <div class="callout">상위 계층은 독립 난수가 아니라 하위 합으로 계산하므로, 합계가 항상 하위 값과 일치합니다.</div>
+    </section>
+
+    <section id="collector">
+      <h2>수집기와 포인트 설정</h2>
+      <div class="cols">
+        <div class="panel">
+          <h3>PostgreSQL 설정 (우선)</h3>
+          <ul>
+            <li>tb_point, tb_asset, tb_space, tb_site를 조인</li>
+            <li>사이트가 하나인지 검증</li>
+            <li>Modbus 매핑 포인트만 로드</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>point_map.yaml (대체)</h3>
+          <ul>
+            <li>DB 연결 실패 시 자동 전환</li>
+            <li>같은 구조의 설정 파일</li>
+            <li>DB 없이도 로컬 실행 가능</li>
+          </ul>
+        </div>
+      </div>
+      <ul>
+        <li><strong>타입별 처리:</strong> di는 Discrete Input 비트, 그 외는 float32 값에 scale을 곱합니다.</li>
+        <li><strong>장애 격리:</strong> 한 장비의 읽기가 실패해도 경고만 남기고 다음 장비를 계속 읽습니다.</li>
+        <li><strong>적재 방식:</strong> 주기마다 InfluxDB에 한 번에 씁니다.</li>
+      </ul>
+    </section>
+
+    <section id="register">
+      <h2>Modbus 레지스터 맵 (SDM630 기준)</h2>
+      <table>
+        <thead>
+          <tr><th>키</th><th>주소 (0-base)</th><th>단위</th><th>설명</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>v_l1</code>, <code>v_l2</code>, <code>v_l3</code></td><td>0x0000, 0x0002, 0x0004</td><td>V</td><td>상전압</td></tr>
+          <tr><td><code>i_l1</code>, <code>i_l2</code>, <code>i_l3</code></td><td>0x0006, 0x0008, 0x000A</td><td>A</td><td>전류</td></tr>
+          <tr><td><code>p_l1</code>, <code>p_l2</code>, <code>p_l3</code></td><td>0x000C, 0x000E, 0x0010</td><td>W</td><td>상별 유효전력</td></tr>
+          <tr><td><code>pf_l1</code></td><td>0x001E</td><td>-</td><td>역률</td></tr>
+          <tr><td><code>p_total</code></td><td>0x0034</td><td>W</td><td>총 유효전력</td></tr>
+          <tr><td><code>s_total</code></td><td>0x0038</td><td>VA</td><td>총 피상전력</td></tr>
+          <tr><td><code>freq</code></td><td>0x0046</td><td>Hz</td><td>주파수</td></tr>
+          <tr><td><code>kwh_import</code></td><td>0x0156</td><td>kWh</td><td>총 수입 전력량 (매뉴얼 재확인 필요)</td></tr>
+        </tbody>
+      </table>
+      <p>float32 값은 상위 워드부터 두 개의 16비트 레지스터로 전송합니다(ABCD 순서). 현장 장비를 연결할 때는 장비 매뉴얼의 주소와 데이터 형식이 이 맵과 일치하는지 가장 먼저 확인해야 합니다.</p>
+    </section>
+
+    <section id="operation">
+      <h2>운영 절차</h2>
+      <ol>
+        <li><strong>기동:</strong> <code>docker compose up -d</code>로 시뮬레이터와 수집기를 올립니다.</li>
+        <li><strong>수집 확인:</strong> 수집기 로그에서 포인트 로드와 적재 여부를 확인합니다.</li>
+        <li><strong>이상 주입:</strong> HTTP API로 과전류, 트립 같은 이상을 발생시킵니다.</li>
+        <li><strong>화면 확인:</strong> Grafana에서 이상이 감지되고 상태가 바뀌는지 확인합니다.</li>
+      </ol>
+      <h3>실행 명령</h3>
+<pre><code># 시뮬레이터와 수집기 빌드 및 실행
+docker compose up -d --build epms-modbus-sim epms-modbus-collector
+
+# 수집 로그 확인 (DB 로드 여부 포함)
+docker logs epms-modbus-collector 2>&1 | grep -E "point_map|DB 로드 실패"</code></pre>
+      <p>정상 실행되면 <code>point_map: DB에서 25개 포인트 로드</code>와 <code>적재 N개 포인트</code> 로그가 출력됩니다.</p>
+    </section>
+
+    <section id="inject">
+      <h2>이상 상황 주입</h2>
+<pre><code># 장비 7번에 과전류 주입
+curl -X POST "http://localhost:8080/inject?scenario=OVERCURRENT&amp;unit=7"
+
+# 모든 장비의 이상 해제
+curl -X POST "http://localhost:8080/inject?scenario=CLEAR&amp;unit=all"
+
+# 현재 상태 조회
+curl "http://localhost:8080/status"</code></pre>
+      <table>
+        <thead>
+          <tr><th>시나리오</th><th>동작</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>OVERCURRENT</code></td><td>전류 25% 상승</td></tr>
+          <tr><td><code>VOLTAGE_SAG</code></td><td>전압 17% 하락</td></tr>
+          <tr><td><code>LOW_PF</code></td><td>역률 0.70 고정</td></tr>
+          <tr><td><code>TRIP</code></td><td>차단기 트립 (TRIP=1, ST=0)</td></tr>
+          <tr><td><code>ALARM</code></td><td>알람 접점 ON</td></tr>
+          <tr><td><code>OPEN</code></td><td>차단기 개방 (ST=0)</td></tr>
+          <tr><td><code>CLEAR</code></td><td>모든 이상과 DI 상태 초기화</td></tr>
+        </tbody>
+      </table>
+      <p>시뮬레이터 컨테이너 콘솔에서는 <code>&lt;unit|all&gt; &lt;fault&gt;</code> 형식으로 입력합니다. 예: <code>7 overcurrent</code>, <code>all clear</code></p>
+    </section>
+
+    <section id="grafana">
+      <h2>Grafana 감시 화면</h2>
+      <figure>
+        <img src="grafana.png" alt="Grafana 감시 화면">
+        <figcaption>이상 주입 버튼, KPI, 단선도, 전압·전류 추이를 한 화면에서 확인합니다.</figcaption>
+      </figure>
+      <ul>
+        <li><strong>상단:</strong> 이상 주입 버튼과 전체 복구</li>
+        <li><strong>KPI:</strong> 총 전력, 역률, 누적 전력량, 변압기 부하율</li>
+        <li><strong>단선도:</strong> 층별 분전반 전력과 차단기 상태</li>
+        <li><strong>하단:</strong> 전압, 전류 추이와 분전반별 부하</li>
+      </ul>
+      <p>이상을 주입하면 상태 패널과 차트가 즉시 바뀌고, 복구 후 정상값으로 돌아옵니다.</p>
+    </section>
+
+    <section id="limits">
+      <h2>한계와 개선 과제</h2>
+      <ul>
+        <li><strong>검증:</strong> <code>kwh_import</code> 주소(0x0156)는 SDM630 매뉴얼로 재확인이 필요합니다.</li>
+        <li><strong>상태 보존:</strong> 이상 상태가 메모리에만 있어 시뮬레이터 재시작 시 초기화됩니다.</li>
+        <li><strong>통신 구간:</strong> RS-485를 쓰는 현장은 Modbus TCP 게이트웨이 설정이 추가로 필요합니다.</li>
+        <li><strong>시연 화면:</strong> Grafana Canvas 기반 Modbus 시연 화면을 마무리할 예정입니다.</li>
+      </ul>
+    </section>
+
+    <section id="trouble">
+      <h2>문제 해결</h2>
+      <h3>DB 로드가 YAML로 대체되는 경우</h3>
+      <p>수집기가 PostgreSQL이 준비되기 전에 연결을 시도하면 <code>Connection refused</code>가 발생하고 YAML로 대체됩니다. 로그 시각을 PostgreSQL 기동 로그와 비교해 기동 순서 문제인지 확인합니다. 재발을 막으려면 <code>postgres</code>에 헬스체크를 추가하고 수집기의 <code>depends_on</code>에 <code>condition: service_healthy</code>를 지정합니다.</p>
+      <h3>고정 IP 지정 시 네트워크 오류</h3>
+      <p><code>no configured subnet contains IP address</code> 오류는 네트워크에 subnet을 정의하지 않고 고정 IP를 지정했을 때 발생합니다. 수집기는 서비스 이름(<code>epms-modbus-sim</code>)으로 접속하므로 고정 IP를 제거하는 것을 권장합니다.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  EPMS Modbus 감시 시스템 테스트 데모 · ykn9080
+</footer>
+
+</body>
+</html>
